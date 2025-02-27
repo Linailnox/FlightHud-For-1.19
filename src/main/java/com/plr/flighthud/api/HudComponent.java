@@ -57,7 +57,7 @@ public abstract class HudComponent {
         drawFont(mc, ctx, s, x - mc.font.width(s), y, color);
     }
     
-    protected void drawX(PoseStack ctx, float x, float y, float w, float h) {
+    protected void drawBox(PoseStack ctx, float x, float y, float w, float h) {
         this.drawBox(ctx, x, y, w, h, CONFIG.getColorRGB());
     }
     

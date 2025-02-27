@@ -41,14 +41,19 @@ public class SettingsConfig {
     }
 
     public static void toggle(boolean flying) {
-        if (flying) displayModeWhenFlying.set(DisplayMode.cycle(displayModeWhenFlying.get()));
-        else displayModeWhenNotFlying.set(DisplayMode.cycle(displayModeWhenNotFlying.get()));
+        if (flying) {
+	        displayModeWhenFlying.set(DisplayMode.cycle(displayModeWhenFlying.get()));
+        } else {
+	        displayModeWhenNotFlying.set(DisplayMode.cycle(displayModeWhenNotFlying.get()));
+        }
         CFG.save();
     }
 
     public static void toggle() {
         final Player player = Minecraft.getInstance().player;
-        if (player == null) return;
+        if (player == null) {
+	        return;
+        }
         toggle(player.isFallFlying());
     }
 }

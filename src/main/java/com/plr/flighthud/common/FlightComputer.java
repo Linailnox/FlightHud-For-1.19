@@ -30,7 +30,9 @@ public class FlightComputer {
     public Float elytraHealth;
 
     public void update(Minecraft client, float partial) {
-        if (client.player == null) return;
+        if (client.player == null) {
+	        return;
+        }
         velocity = client.player.getDeltaMovement();
         pitch = computePitch(client, partial);
         speed = computeSpeed(client);
@@ -45,19 +47,27 @@ public class FlightComputer {
     }
 
     private Float computeElytraHealth(Minecraft client) {
-        if (client.player == null) return null;
+        if (client.player == null) {
+	        return null;
+        }
         final ItemStack stack = client.player.getItemBySlot(EquipmentSlot.CHEST);
-        if (!stack.is(Items.ELYTRA)) return null;
+        if (!stack.is(Items.ELYTRA)) {
+	        return null;
+        }
         return (stack.getMaxDamage() - stack.getDamageValue()) * 100.0f / stack.getMaxDamage();
     }
 
     private float computeFlightPitch(Vec3 velocity, float pitch) {
-        if (velocity.length() < 0.01) return pitch;
+        if (velocity.length() < 0.01) {
+	        return pitch;
+        }
         return (float) (90 - Math.toDegrees(Math.acos(velocity.normalize().y)));
     }
 
     private float computeFlightHeading(Vec3 velocity, float heading) {
-        if (velocity.length() < 0.01) return heading;
+        if (velocity.length() < 0.01) {
+	        return heading;
+        }
         return toHeading((float) Math.toDegrees(-Math.atan2(velocity.x, velocity.z)));
     }
 
@@ -67,7 +77,9 @@ public class FlightComputer {
      * to enable both mods will sync up when used together.
      */
     private float computeRoll(Minecraft client, float partial) {
-        if (client.player == null) return 0;
+        if (client.player == null) {
+	        return 0;
+        }
         if (!SettingsConfig.calculateRoll.get()) {
             return 0;
         }
@@ -96,18 +108,24 @@ public class FlightComputer {
     }
 
     private float computePitch(Minecraft client, float parital) {
-        if (client.player == null) return 0;
+        if (client.player == null) {
+	        return 0;
+        }
         return client.player.getViewXRot(parital) * -1;
     }
 
     private boolean isGround(BlockPos pos, Minecraft client) {
-        if (client.level == null) return false;
+        if (client.level == null) {
+	        return false;
+        }
         BlockState block = client.level.getBlockState(pos);
         return !block.isAir();
     }
 
     public BlockPos findGround(Minecraft client) {
-        if (client.player == null) return null;
+        if (client.player == null) {
+	        return null;
+        }
         BlockPos pos = client.player.blockPosition();
         while (pos.getY() >= 0) {
             pos = pos.below();
@@ -124,27 +142,37 @@ public class FlightComputer {
     }
 
     private Float computeDistanceFromGround(Minecraft client, float altitude, Integer groundLevel) {
-        if (groundLevel == null) return null;
+        if (groundLevel == null) {
+            return null;
+        }
         return Math.max(0f, altitude - groundLevel);
     }
 
     private float computeAltitude(Minecraft client) {
-        if (client.player == null) return 0;
+        if (client.player == null) {
+            return 0;
+        }
         return (float) client.player.position().y - 1;
     }
 
     private float computeHeading(Minecraft client) {
-        if (client.player == null) return 0.0f;
+        if (client.player == null) {
+            return 0.0f;
+        }
         return toHeading(client.player.getYRot());
     }
 
     private float computeSpeed(Minecraft client) {
         float speed = 0.0f;
         var player = client.player;
-        if (player == null) return speed;
+        if (player == null) {
+	        return speed;
+        }
         if (player.isPassenger()) {
             Entity entity = player.getVehicle();
-            if (entity == null) return 0.0f;
+            if (entity == null) {
+	            return 0.0f;
+            }
             speed = (float) entity.getDeltaMovement().length() * TICKS_PER_SECOND;
         } else {
             speed = (float) player.getDeltaMovement().length() * TICKS_PER_SECOND;

@@ -1,9 +1,9 @@
 package com.plr.flighthud.common.components;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.plr.flighthud.api.HudComponent;
 import com.plr.flighthud.common.Dimensions;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
 
 public class LocationIndicator extends HudComponent {
 
@@ -14,8 +14,10 @@ public class LocationIndicator extends HudComponent {
     }
 
     @Override
-    public void render(GuiGraphics ctx, float partial, Minecraft mc) {
-        if (mc.player == null) return;
+    public void render(PoseStack ctx, float partial, Minecraft mc) {
+        if (mc.player == null) {
+	        return;
+        }
         if (!CONFIG.location_showReadout.get()) {
             return;
         }

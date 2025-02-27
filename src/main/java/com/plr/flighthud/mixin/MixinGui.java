@@ -1,9 +1,9 @@
 package com.plr.flighthud.mixin;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.plr.flighthud.common.HudRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiGraphics;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -22,13 +22,15 @@ public abstract class MixinGui {
     private HudRenderer hud;
 
     @Inject(method = "render", at = @At("RETURN"))
-    private void render(GuiGraphics guiGraphics, float f, CallbackInfo ci) {
+    private void render(PoseStack guiGraphics, float f, CallbackInfo ci) {
         getHud().render(guiGraphics, f, minecraft);
     }
 
     @Unique
     private HudRenderer getHud() {
-        if (hud == null) hud = new HudRenderer();
+        if (hud == null) {
+	        hud = new HudRenderer();
+        }
         return hud;
     }
 }

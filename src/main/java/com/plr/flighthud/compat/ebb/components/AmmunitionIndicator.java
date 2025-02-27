@@ -1,10 +1,10 @@
 package com.plr.flighthud.compat.ebb.components;
 
 import com.google.common.collect.ImmutableList;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.plr.flighthud.api.HudComponent;
 import com.plr.flighthud.common.Dimensions;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -20,10 +20,14 @@ public class AmmunitionIndicator extends HudComponent {
     }
 
     @Override
-    public void render(GuiGraphics ctx, float partial, Minecraft mc) {
+    public void render(PoseStack ctx, float partial, Minecraft mc) {
         final var player = mc.player;
-        if (player == null) return;
-        if (!igniters.contains(player.getItemInHand(InteractionHand.MAIN_HAND).getItem())) return;
+        if (player == null) {
+	        return;
+        }
+        if (!igniters.contains(player.getItemInHand(InteractionHand.MAIN_HAND).getItem())) {
+	        return;
+        }
         final int tntCount = player.getInventory().countItem(Items.TNT);
         final float cd = player.getCooldowns().getCooldownPercent(Items.TNT, partial);
         final float x = dim.wScreen * CONFIG.ebb_tnt_x.get().floatValue();

@@ -1,10 +1,10 @@
 package com.plr.flighthud.common.components;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.plr.flighthud.api.HudComponent;
 import com.plr.flighthud.common.Dimensions;
 import com.plr.flighthud.common.FlightComputer;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
 
 public class ElytraHealthIndicator extends HudComponent {
 
@@ -17,7 +17,7 @@ public class ElytraHealthIndicator extends HudComponent {
     }
 
     @Override
-    public void render(GuiGraphics ctx, float partial, Minecraft mc) {
+    public void render(PoseStack ctx, float partial, Minecraft mc) {
         if (!CONFIG.elytra_showHealth.get() || computer.elytraHealth == null) {
             return;
         }

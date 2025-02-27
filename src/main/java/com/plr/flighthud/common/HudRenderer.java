@@ -8,7 +8,6 @@ import com.plr.flighthud.api.IFlies;
 import com.plr.flighthud.common.config.HudConfig;
 import com.plr.flighthud.common.config.SettingsConfig;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
 
 import java.util.List;
 
@@ -23,7 +22,9 @@ public class HudRenderer extends HudComponent {
             .toList();
 
     private void setupConfig(Minecraft client) {
-        if (client.player == null) return;
+        if (client.player == null) {
+	        return;
+        }
         HudComponent.CONFIG = switch (((IFlies) client.player).flighthud$isActuallyFlying() ?
                 SettingsConfig.displayModeWhenFlying.get() :
                 SettingsConfig.displayModeWhenNotFlying.get()) {
@@ -34,20 +35,19 @@ public class HudRenderer extends HudComponent {
     }
 
     @Override
-    public void render(GuiGraphics ctx, float partial, Minecraft client) {
+    public void render(PoseStack ctx, float partial, Minecraft client) {
         setupConfig(client);
 
         if (HudComponent.CONFIG == null) {
             return;
         }
-
-        final PoseStack m = ctx.pose();
+        
         try {
-            m.pushPose();
+            ctx.pushPose();
             final float scale0 = HudComponent.CONFIG.scale.get().floatValue();
             if (scale0 != 1.0f) {
                 float scale = 1 / scale0;
-                m.scale(scale, scale, scale);
+                ctx.scale(scale, scale, scale);
             }
 
             if (updateTick == 0) {
@@ -60,7 +60,7 @@ public class HudRenderer extends HudComponent {
             for (HudComponent component : components) {
                 component.render(ctx, partial, client);
             }
-            m.popPose();
+            ctx.popPose();
         } catch (Exception e) {
             FlightHud.LOGGER.error("Error occurred when rendering FlightHud", e);
         }

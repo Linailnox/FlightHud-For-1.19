@@ -150,7 +150,9 @@ public class HudConfig {
         }
 
         public static Min getInstance() {
-            if (instance == null) instance = new Min();
+            if (instance == null) {
+	            instance = new Min();
+            }
             return instance;
         }
     }
@@ -163,7 +165,9 @@ public class HudConfig {
         }
 
         public static Full getInstance() {
-            if (instance == null) instance = new Full();
+            if (instance == null) {
+	            instance = new Full();
+            }
             return instance;
         }
     }

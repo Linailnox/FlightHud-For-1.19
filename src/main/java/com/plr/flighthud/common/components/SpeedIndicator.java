@@ -1,10 +1,10 @@
 package com.plr.flighthud.common.components;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.plr.flighthud.api.HudComponent;
 import com.plr.flighthud.common.Dimensions;
 import com.plr.flighthud.common.FlightComputer;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
 
 public class SpeedIndicator extends HudComponent {
     private final Dimensions dim;
@@ -16,7 +16,7 @@ public class SpeedIndicator extends HudComponent {
     }
 
     @Override
-    public void render(GuiGraphics ctx, float partial, Minecraft mc) {
+    public void render(PoseStack ctx, float partial, Minecraft mc) {
         float top = dim.tFrame;
         float bottom = dim.bFrame;
 
@@ -38,8 +38,9 @@ public class SpeedIndicator extends HudComponent {
         if (CONFIG.speed_showScale.get()) {
             for (float i = 0; i <= 100; i = i + 0.25f) {
                 float y = dim.hScreen - i * unitPerPixel - yFloor;
-                if (y < top || y > (bottom - 5))
-                    continue;
+                if (y < top || y > (bottom - 5)) {
+	                continue;
+                }
 
                 if (i % 1 == 0) {
                     drawHorizontalLine(ctx, left - 2, right, y);

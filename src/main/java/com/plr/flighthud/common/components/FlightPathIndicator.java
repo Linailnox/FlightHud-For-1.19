@@ -1,10 +1,10 @@
 package com.plr.flighthud.common.components;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.plr.flighthud.api.HudComponent;
 import com.plr.flighthud.common.Dimensions;
 import com.plr.flighthud.common.FlightComputer;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
 
 public class FlightPathIndicator extends HudComponent {
     private final Dimensions dim;
@@ -16,7 +16,7 @@ public class FlightPathIndicator extends HudComponent {
     }
 
     @Override
-    public void render(GuiGraphics ctx, float partial, Minecraft client) {
+    public void render(PoseStack ctx, float partial, Minecraft client) {
         if (!CONFIG.flightPath_show.get()) {
             return;
         }

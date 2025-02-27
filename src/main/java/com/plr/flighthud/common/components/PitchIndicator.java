@@ -1,12 +1,11 @@
 package com.plr.flighthud.common.components;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
+import com.mojang.math.Vector3f;
 import com.plr.flighthud.api.HudComponent;
 import com.plr.flighthud.common.Dimensions;
 import com.plr.flighthud.common.FlightComputer;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
 
 public class PitchIndicator extends HudComponent {
     private final Dimensions dim;
@@ -19,7 +18,7 @@ public class PitchIndicator extends HudComponent {
     }
 
     @Override
-    public void render(GuiGraphics ctx, float partial, Minecraft mc) {
+    public void render(PoseStack ctx, float partial, Minecraft mc) {
         pitchData.update(dim);
 
         float horizonOffset = computer.pitch * dim.degreesPerPixel;
@@ -30,13 +29,11 @@ public class PitchIndicator extends HudComponent {
 
         double roll = CONFIG.pitchLadder_rollDisplayMode.get().processRoll(computer.roll);
 
-        final PoseStack m = ctx.pose();
-
         if (CONFIG.pitchLadder_showRoll.get()) {
-            m.pushPose();
-            m.translate(b, a, 0);
-            m.mulPose(Axis.ZP.rotationDegrees((float) roll));
-            m.translate(-b, -a, 0);
+            ctx.pushPose();
+            ctx.translate(b, a, 0);
+            ctx.mulPose(Vector3f.ZP.rotationDegrees((float) roll));
+            ctx.translate(-b, -a, 0);
         }
 
         if (CONFIG.pitchLadder_showLadder.get()) {
@@ -53,11 +50,11 @@ public class PitchIndicator extends HudComponent {
         }
 
         if (CONFIG.pitchLadder_showRoll.get()) {
-            m.popPose();
+            ctx.popPose();
         }
     }
 
-    private void drawLadder(Minecraft mc, GuiGraphics ctx, float yHorizon) {
+    private void drawLadder(Minecraft mc, PoseStack ctx, float yHorizon) {
         int degreesPerBar = CONFIG.pitchLadder_degreesPerBar.get();
 
         if (degreesPerBar < 1) {
@@ -72,7 +69,7 @@ public class PitchIndicator extends HudComponent {
 
     }
 
-    private void drawReferenceMark(Minecraft mc, GuiGraphics ctx, float yHorizon, float degrees) {
+    private void drawReferenceMark(Minecraft mc, PoseStack ctx, float yHorizon, float degrees) {
         if (degrees == 0) {
             return;
         }
@@ -91,7 +88,7 @@ public class PitchIndicator extends HudComponent {
         drawHorizontalLineDashed(ctx, pitchData.r1, r2, y, 3);
     }
 
-    private void drawDegreeBar(Minecraft mc, GuiGraphics ctx, float degree, float y) {
+    private void drawDegreeBar(Minecraft mc, PoseStack ctx, float degree, float y) {
 
         if (y < dim.tFrame || y > dim.bFrame) {
             return;

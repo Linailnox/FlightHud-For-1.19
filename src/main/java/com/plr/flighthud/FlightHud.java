@@ -5,7 +5,7 @@ import com.mojang.logging.LogUtils;
 import com.plr.flighthud.common.config.HudConfig;
 import com.plr.flighthud.common.config.SettingsConfig;
 import com.plr.flighthud.compat.ebb.ElytraBombingCompat;
-import fuzs.forgeconfigapiport.api.config.v2.ForgeConfigRegistry;
+import net.minecraftforge.api.ModLoadingContext;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
@@ -25,15 +25,17 @@ public class FlightHud implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        ForgeConfigRegistry.INSTANCE.register(MODID,
+        ModLoadingContext.registerConfig(MODID,
                 ModConfig.Type.CLIENT, SettingsConfig.CFG, "flighthud.settings.toml");
-        ForgeConfigRegistry.INSTANCE.register(MODID,
+        ModLoadingContext.registerConfig(MODID,
                 ModConfig.Type.CLIENT, HudConfig.Full.getInstance().CFG, "flighthud.hud.full.toml");
-        ForgeConfigRegistry.INSTANCE.register(MODID,
+        ModLoadingContext.registerConfig(MODID,
                 ModConfig.Type.CLIENT, HudConfig.Min.getInstance().CFG, "flighthud.hud.min.toml");
         setupKeyCode();
         setupCommand();
-        if (FabricLoader.getInstance().isModLoaded("ebb")) ElytraBombingCompat.init();
+        if (FabricLoader.getInstance().isModLoaded("ebb")) {
+	        ElytraBombingCompat.init();
+        }
     }
 
     private static void setupKeyCode() {

@@ -1,10 +1,10 @@
 package com.plr.flighthud.common.components;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.plr.flighthud.api.HudComponent;
 import com.plr.flighthud.common.Dimensions;
 import com.plr.flighthud.common.FlightComputer;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
 
 public class HeadingIndicator extends HudComponent {
 
@@ -17,7 +17,7 @@ public class HeadingIndicator extends HudComponent {
     }
 
     @Override
-    public void render(GuiGraphics ctx, float partial, Minecraft mc) {
+    public void render(PoseStack ctx, float partial, Minecraft mc) {
         float left = dim.lFrame;
         float right = dim.rFrame;
         float top = dim.tFrame - 10;

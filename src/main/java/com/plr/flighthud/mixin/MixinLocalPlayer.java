@@ -6,6 +6,8 @@ import com.plr.flighthud.common.config.SettingsConfig;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.world.entity.player.ProfilePublicKey;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -17,8 +19,8 @@ public abstract class MixinLocalPlayer extends AbstractClientPlayer implements I
     @Unique
     private long flighthud$lastElytraFlyTime = -1;
 
-    public MixinLocalPlayer(ClientLevel clientLevel, GameProfile gameProfile) {
-        super(clientLevel, gameProfile);
+    public MixinLocalPlayer(ClientLevel clientLevel, GameProfile gameProfile,@Nullable ProfilePublicKey profilePublicKey) {
+        super(clientLevel, gameProfile,profilePublicKey);
     }
 
     @Override
@@ -30,7 +32,11 @@ public abstract class MixinLocalPlayer extends AbstractClientPlayer implements I
     @Inject(method = "tick", at = @At("TAIL"))
     private void inject$tick(CallbackInfo ci) {
         if (isFallFlying()) {
-            if (flighthud$lastElytraFlyTime == -1) flighthud$lastElytraFlyTime = System.currentTimeMillis();
-        } else flighthud$lastElytraFlyTime = -1;
+            if (flighthud$lastElytraFlyTime == -1) {
+	            flighthud$lastElytraFlyTime = System.currentTimeMillis();
+            }
+        } else {
+	        flighthud$lastElytraFlyTime = -1;
+        }
     }
 }

@@ -1,10 +1,18 @@
-# Flight HUD
+# Flight HUD: Reborn
 
-__Flight HUD__ is a client side Fabric Minecraft Mod that adds a flight style HUD like one you would see in a flight simulator.
+## Introduction
 
-![HUD Screenshot](images/hud2020-07-07.png?raw=true "HUD Screenshot")
+__Flight HUD: Reborn__ is a fork and an unofficial port of [Flight HUD](https://github.com/frodare/FlightHud), a client side Minecraft Mod that adds a flight-simulator-style HUD for elytra flying.
 
-## Features
+![HUD Demo](images/flighthud_demo.gif?raw=true "HUD Screenshot")
+
+## Available On
+
+### CurseForge
+
+[![CurseForge](https://cf.way2muchnoise.eu/936558.svg?badge_style=flat)](https://www.curseforge.com/minecraft/mc-mods/flighthud-reborn)
+
+## Features(Original)
 - pitch ladder
 - artificial horizon
 - flight path (prograde vector)
@@ -22,10 +30,59 @@ __Flight HUD__ is a client side Fabric Minecraft Mod that adds a flight style HU
 - elytra health percentage
 - location in x/z
 
+## Features(New)
+- elytra bombing TNT count
+- PullUp warning texts
+
+## Components
 
 ![HUD Components](images/hud-diagram.png?raw=true "HUD Components")
 
-## Requirements
-- Minecraft 1.16.1
-- Fabric Mod Loader
-- Fabric API Mod
+## For Developers
+
+### Import As A Gradle Dependency
+
+#### Repositories
+```groovy
+repositories {
+    //...
+    maven {
+        url "https://cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
+    }
+}
+```
+
+#### Dependencies:
+
+##### Fabric:
+
+```groovy
+dependencies {
+    //...
+    modImplementation "curse.maven:flighthud-reborn-936558:${project.flighthud_file_id}"
+    modImplementation "curse.maven:forge-config-api-port-fabric-547434:${project.fcapi_file_id}" // Dependency of flighthud-reborn fabric
+    compileOnly('com.electronwill.night-config:core:3.6.5') 
+    compileOnly('com.electronwill.night-config:toml:3.6.5') // Dependency of forge config api port
+}
+```
+
+##### Forge:
+
+```groovy
+dependencies {
+    //...
+    implementation fg.deobf("curse.maven:flighthud-reborn-936558:${project.flighthud_file_id}")
+}
+```
+
+### Register a new indicator into the flight hud
+```java
+import com.plr.flighthud.api.HudRegistry;
+
+void foo() {
+  HudRegistry.addComponent((computer, dim) -> new ExampleIndicator(computer, dim));
+}
+```

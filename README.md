@@ -1,18 +1,18 @@
-# Flight HUD: Reborn
+# Flight HUD: Reborn For 1.19.2
 
 ## Introduction
 
-__Flight HUD: Reborn__ is a fork and an unofficial port of [Flight HUD](https://github.com/frodare/FlightHud), a client side Minecraft Mod that adds a flight-simulator-style HUD for elytra flying.
+__Flight HUD: Reborn For 1.19.2__ is a fork and an unofficial port of [Flight HUD](https://github.com/MikhailTapio/FlightHud), a client side Minecraft Mod that adds a flight-simulator-style HUD for elytra flying.
 
-![HUD Demo](images/flighthud_demo.gif?raw=true "HUD Screenshot")
+![HUD Screenshot](images/hud2020-07-07.png?raw=true "HUD Screenshot")
 
 ## Available On
 
-### CurseForge
-
-[![CurseForge](https://cf.way2muchnoise.eu/936558.svg?badge_style=flat)](https://www.curseforge.com/minecraft/mc-mods/flighthud-reborn)
+### [Github Releases](https://github.com/Linailnox/FlightHud-For-1.19/releases)
 
 ## Features(Original)
+Same features and bugs as the original branch
+
 - pitch ladder
 - artificial horizon
 - flight path (prograde vector)
@@ -29,10 +29,11 @@ __Flight HUD: Reborn__ is a fork and an unofficial port of [Flight HUD](https://
   - current altitude
 - elytra health percentage
 - location in x/z
-
-## Features(New)
 - elytra bombing TNT count
 - PullUp warning texts
+
+## Features(New)
+- Nothing
 
 ## Components
 
